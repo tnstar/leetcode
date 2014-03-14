@@ -14,14 +14,13 @@ class Solution:
         head = None
         phead = None
         next_pop = -1
-        avail_list = range(len(lists)) #lists to be extracted
         pri_heap = []
+        avail_list = range(len(lists))
         for i in avail_list:
             if lists[i]:
-                heapq.heappush(pri_heap, (lists[i].pop(0),i))
-            else:
-                avail_list.remove(i)
-        while (avail_list or pri_heap):
+                heapq.heappush(pri_heap, (lists[i].val,i))
+                lists[i] = lists[i].next
+        while pri_heap:
             if head == None:
                 temp = heapq.heappop(pri_heap)
                 #print temp[0]
@@ -37,18 +36,20 @@ class Solution:
                 next_pop = temp[1]
                 #print str(next_pop)+" next"
             if lists[next_pop]:
-                heapq.heappush(pri_heap, (lists[next_pop].pop(0),next_pop))
+                heapq.heappush(pri_heap, (lists[next_pop].val,next_pop))
+                lists[next_pop] = lists[next_pop].next
                 #print str(next_pop)+" pop"
-                if not lists[next_pop]:
-                    #print "removing"+str(next_pop)
-                    avail_list.remove(next_pop)
             else:
                 pass
         return phead
-                
-lists = [[1,5,8],[2,4,8,9],[3,6,9]]
+
+h1 = ListNode(1)
+h1.next = ListNode(3)
+h2 = ListNode(2)
+h2.next = ListNode(4)                
+lists = [h1,h2]
 sol = Solution()
 head = sol.mergeKLists(lists)
-while head.next!=None:
+while head!=None:
     print head.val
     head=head.next
