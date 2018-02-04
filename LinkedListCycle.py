@@ -1,34 +1,25 @@
-'''
-Created on Mar 14, 2014
-
-@author: C_TLU
-'''
 # Definition for singly-linked list.
-# class ListNode:
+# class ListNode(object):
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
-class Solution:
-    # @param head, a ListNode
-    # @return a boolean
+class Solution(object):
     def hasCycle(self, head):
-        head1 = head
-        head2 = head
-        while True:
-            if head1 == None:
-                return False
-            head1=head1.next
-            if head2 == None:
-                return False
-            head2 = head2.next
-            if head2 == None:
-                return False
-            head2 = head2.next
-            if head1 == head2:
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head or not head.next:
+            return False
+        slow = head
+        fast = head.next.next
+        while fast:
+            if slow == fast:
                 return True
+            slow = slow.next
+            if fast and fast.next:
+                fast = fast.next.next
+            else:
+                return False
+        return False

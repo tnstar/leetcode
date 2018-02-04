@@ -1,11 +1,11 @@
-'''
-Created on Mar 18, 2014
-
-@author: C_TLU
-'''
-class Solution:
-    # @param s, a string
-    # @param dict, a set of string
-    # @return a boolean
-    def wordBreak(self, s, dict):
-        
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [True]
+        for i in xrange(1,len(s)+1):
+            dp += [any(dp[j] and s[j:i] in wordDict for j in xrange(i))]
+        return dp[-1]
